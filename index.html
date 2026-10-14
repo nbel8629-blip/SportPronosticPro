@@ -144,7 +144,74 @@ function redeemCode(){
   const message=document.getElementById('codeMessage');
   if(!code){message.textContent='Entre ton code Premium.';return;}
   message.textContent='La vérification des codes sera disponible après la connexion sécurisée à Supabase.';
+}async function chargerMatchs() {
+  const liste = document.getElementById("liste");
+
+  if (!liste) return;
+
+  liste.innerHTML = "<p>Chargement des matchs...</p>";
+
+  try {
+    const { data, error } = await window.predixaDB
+      .from("matches")
+      .select("*");
+
+    if (error) throw error;
+
+    if (!data || data.length === 0) {
+      liste.innerHTML =
+        "<p>Aucun match disponible pour le moment. Les matchs apparaîtront ici dès leur ajout.</p>";
+      return;
+    }
+
+    liste.innerHTML = "";
+
+    data.forEach(match => {
+      const carte = document.createElement("div");
+      carte.className = "correspondre";
+
+      carte.style.margin = "10px 0";
+      carte.style.padding = "12px";
+
+      const titre = document.createElement("h3");
+      titre.textContent =
+        (match.home_team || match.equipe_domicile || match.homeTeam || "Équipe 1") +
+        " - " +
+        (match.away_team || match.equipe_exterieure || match.awayTeam || "Équipe 2");
+
+      carte.appendChild(titre);
+
+      if (match.date) {
+        const date = document.createElement("p");
+        date.textContent = "Date : " + match.date;
+        carte.appendChild(date);
+      }
+
+      if (match.status) {
+        const statut = document.createElement("p");
+        statut.textContent = "Statut : " + match.status;
+        carte.appendChild(statut);
+      }
+
+      liste.appendChild(carte);
+    });
+  } catch (erreur) {
+    console.error("Erreur de chargement des matchs :", erreur);
+
+    liste.innerHTML =
+      "<p>Impossible de charger les matchs. Vérifiez la connexion à Supabase et les autorisations de lecture.</p>";
+  }
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  const boutonMatch = document.querySelector(
+    'button[onclick*="afficherPage(\'matchs\')"]'
+  );
+
+  if (boutonMatch) {
+    boutonMatch.addEventListener("click", chargerMatchs);
+  }
+});
 </script>
 </body>
      </html>
