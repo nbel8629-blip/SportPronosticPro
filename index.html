@@ -2,206 +2,136 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#07111f">
-<title>PREDIXA PRO</title>
+<title>Predixa — Pronostics sportifs</title>
 <style>
-:root{--bg:#080e19;--panel:#111b2b;--line:#26364c;--green:#22dfa1;--gold:#ffc966;--text:#f4f7fc;--muted:#91a2b9}
+:root{--bg:#07111f;--card:#101e30;--green:#19e68c;--text:#f5f7fa;--muted:#9baabd}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif;padding-bottom:78px}
-header{padding:18px 16px;background:#0c1625;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
-.brand{display:flex;align-items:center;gap:10px}
-.logo{width:43px;height:43px;background:linear-gradient(135deg,#23e6a6,#087d70);border-radius:13px;display:grid;place-items:center;color:#061a17;font-size:23px;font-weight:bold}
-h1{font-size:22px;margin:0;letter-spacing:1px}
-.brand small{color:var(--muted)}
-main{max-width:760px;margin:auto;padding:15px}
-.page{display:none}.page.active{display:block}
-.hero{padding:23px 18px;border-radius:20px;background:linear-gradient(135deg,#123d38,#14223b 75%);border:1px solid #24574d;margin:7px 0 18px}
-.hero h2{font-size:25px;margin:12px 0}
-.green{color:var(--green)}.gold{color:var(--gold)}
-.muted{color:var(--muted);font-size:13px;line-height:1.5}
-.pill{display:inline-block;background:#183c36;color:var(--green);padding:6px 9px;border-radius:20px;font-size:11px;font-weight:bold}
-.search{display:flex;gap:8px;margin:15px 0}
-input,select,textarea{width:100%;background:#0c1625;color:white;border:1px solid var(--line);border-radius:11px;padding:13px;font-size:14px;margin:6px 0 13px}
-button,.btn{border:0;border-radius:11px;padding:12px 14px;font-weight:bold;cursor:pointer}
-.primary{background:var(--green);color:#061b16}
-.secondary{background:#1b2a40;color:white;border:1px solid var(--line)}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:15px;margin:11px 0}
-.league{display:flex;align-items:center;gap:10px;font-weight:bold;font-size:14px}
-.league img{width:28px;height:28px;object-fit:contain}
-.match{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:17px}
-.team{width:36%;text-align:center;font-size:13px}
-.team img{width:38px;height:38px;object-fit:contain;display:block;margin:0 auto 7px}
-.vs{color:var(--muted);font-size:12px;text-align:center}
-.tabs{display:flex;gap:8px;overflow:auto;padding:12px;background:#0c1625;scrollbar-width:none}
-.tabs button{white-space:nowrap;background:#172439;color:#bdc9d9}
-.tabs button.active{background:var(--green);color:#061b16}
-.bottom{position:fixed;bottom:0;left:0;right:0;z-index:10;display:flex;justify-content:space-around;background:#0c1625;border-top:1px solid var(--line);padding:9px 2px calc(9px + env(safe-area-inset-bottom))}
-.bottom button{background:none;color:var(--muted);font-size:11px;padding:6px 4px}
-.bottom button.active{color:var(--green)}
-.bottom span{display:block;font-size:20px;margin-bottom:4px}
-.section-title{display:flex;align-items:center;justify-content:space-between;margin:22px 0 10px}
-.section-title h2{font-size:18px;margin:0}
-label{font-size:13px;color:#c5d0df}
-.result{font-weight:bold;color:var(--gold)}
-.hidden{display:none!important}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif}
+header{padding:20px;background:#0c1929;border-bottom:1px solid #203248}
+.logo{font-size:27px;font-weight:900;color:var(--green)}
+.logo span{color:white}
+header p{margin:7px 0 0;color:var(--muted);font-size:13px}
+nav{display:flex;gap:9px;overflow:auto;padding:14px}
+button{border:0;border-radius:9px;padding:12px 15px;font-weight:bold;cursor:pointer}
+.tab{background:#14253a;color:white;white-space:nowrap}
+.tab.active,.primary{background:var(--green);color:#062015}
+main{padding:14px;max-width:750px;margin:auto}
+h2{font-size:19px}
+.notice{padding:14px;background:#102a29;border:1px solid #1a6248;border-radius:12px;color:#b9f9dc;line-height:1.5}
+.match{background:var(--card);border:1px solid #203248;border-radius:14px;padding:16px;margin:12px 0}
+.league{font-size:12px;color:var(--green)}
+.teams{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:18px 0;font-weight:bold}
+.vs{color:var(--muted);font-size:12px}
+.prediction{border-top:1px solid #26364a;padding-top:12px;font-size:14px}
+.badge{display:inline-block;background:#183e34;color:#8fffc6;border-radius:6px;padding:6px 9px}
+.plans{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:10px}
+.plan{background:var(--card);border:1px solid #26384e;border-radius:12px;padding:15px}
+.price{font-size:24px;font-weight:bold;color:var(--green);margin:12px 0}
+small,.muted{color:var(--muted)}
 a{color:var(--green)}
-footer{text-align:center;color:var(--muted);font-size:12px;padding:25px}
+footer{text-align:center;padding:25px;color:var(--muted);font-size:12px}
+input{width:100%;padding:13px;margin:10px 0;background:#07111f;color:white;border:1px solid #34445a;border-radius:8px}
 </style>
 </head>
 <body>
-
 <header>
- <div class="brand">
-  <div class="logo">P</div>
-  <div><h1>PREDIXA <span class="green">PRO</span></h1><small>Football • Analyses • Pronostics</small></div>
- </div>
+  <div class="logo">PREDI<span>XA</span> ⚽</div>
+  <p>Analyse sportive • Pronostics • Résultats</p>
 </header>
 
-<div class="tabs" id="quickTabs">
- <button class="active" onclick="filtre('Tous',this)">Tous</button>
- <button onclick="filtre('Premier League',this)">🏴 Premier League</button>
- <button onclick="filtre('Liga',this)">🇪🇸 Liga</button>
- <button onclick="filtre('Ligue 1',this)">🇫🇷 Ligue 1</button>
- <button onclick="filtre('Serie A',this)">🇮🇹 Serie A</button>
- <button onclick="filtre('Bundesliga',this)">🇩🇪 Bundesliga</button>
-</div>
+<nav>
+  <button class="tab active" onclick="showPage('home',this)">🏠 Accueil</button>
+  <button class="tab" onclick="showPage('matches',this)">⚽ Matchs</button>
+  <button class="tab" onclick="showPage('premium',this)">👑 Premium</button>
+</nav>
 
 <main>
-<section class="page active" id="home">
- <div class="hero">
-  <span class="pill">⚡ TON ESPACE FOOTBALL</span>
-  <h2>Les matchs.<br><span class="green">Les analyses.</span> Les pronostics.</h2>
-  <p class="muted">Retrouve les rencontres, les pronostics et les résultats sur une seule plateforme.</p>
-  <button class="primary" onclick="ouvrir('football')">Explorer le football →</button>
- </div>
- <div class="search">
-  <input id="searchHome" placeholder="🔎 Rechercher un club ou championnat..." oninput="chercher(this.value)">
- </div>
- <div class="section-title"><h2>🏆 Matchs & championnats</h2><span class="pill">API</span></div>
- <p class="muted">Les rencontres réelles apparaîtront ici lorsque l'API sera connectée.</p>
- <div id="matchesHome"></div>
- <div class="card">
-  <h3>🎮 FIFA / eSoccer</h3>
-  <p class="muted">Pronostics publiés manuellement par l'administration Predixa.</p>
-  <button class="secondary" onclick="ouvrir('fifa')">Voir les pronostics</button>
- </div>
- <div class="card">
-  <h3>👑 Predixa Premium</h3>
-  <p class="muted">Les publications Premium seront accessibles selon les droits accordés.</p>
-  <button class="primary" onclick="ouvrir('premium')">Accéder au Premium</button>
- </div>
+<section id="home">
+  <div class="notice">
+    <strong>Bienvenue sur Predixa !</strong><br>
+    Retrouvez les pronostics sportifs et les offres Premium.
+    Les pronostics sont des estimations, jamais des garanties de gain.
+  </div>
+  <h2>🔥 Nos rubriques</h2>
+  <div class="match">
+    <h3>⚽ Pronostics sportifs</h3>
+    <p class="muted">Consultez les analyses et les matchs à venir.</p>
+    <button class="primary" onclick="showPage('matches')">Voir les matchs</button>
+  </div>
+  <div class="match">
+    <h3>👑 Predixa Premium</h3>
+    <p class="muted">Découvrez nos formules d'accès Premium.</p>
+    <button class="primary" onclick="showPage('premium')">Voir les tarifs</button>
+  </div>
+  <div class="match">
+    <h3>📲 Notre communauté</h3>
+    <p>Retrouvez Predixa sur Telegram.</p>
+    <a href="https://t.me/predixaorg" target="_blank" rel="noopener">Rejoindre le Telegram →</a>
+  </div>
 </section>
 
-<section class="page" id="football">
- <div class="section-title"><h2>⚽ Football</h2><span class="pill">MATCHS</span></div>
- <input id="searchFootball" placeholder="🔎 Rechercher équipe, match, championnat..." oninput="chercher(this.value)">
- <p class="muted">Aucun faux match n'est affiché. Les vrais matchs seront chargés depuis ton API après configuration.</p>
- <div id="matchesFootball"></div>
+<section id="matches" hidden>
+  <h2>⚽ Matchs et pronostics</h2>
+  <div class="notice">Les matchs réels apparaîtront après la connexion de ton API sportive.</div>
+  <div id="matchList"></div>
 </section>
 
-<section class="page" id="fifa">
- <div class="section-title"><h2>🎮 FIFA / eSoccer</h2></div>
- <div id="fifaList"></div>
-</section>
-
-<section class="page" id="picks">
- <div class="section-title"><h2>🎯 Pronostics publiés</h2></div>
- <div id="picksList"></div>
-</section>
-
-<section class="page" id="premium">
- <div class="hero"><span class="pill">👑 ESPACE PREMIUM</span><h2>Pronostics <span class="gold">Premium</span></h2>
- <p class="muted">Entre ton code d'accès communiqué par Predixa.</p>
- <input id="premiumCode" placeholder="Code d'accès">
- <button class="primary" onclick="verifierPremium()">Vérifier mon code</button>
- <p id="premiumMsg" class="muted"></p></div>
- <div id="premiumList"></div>
-</section>
-
-<section class="page" id="history">
- <div class="section-title"><h2>📊 Historique des résultats</h2></div>
- <div id="historyList"></div>
-</section>
-
-<section class="page" id="admin">
- <div class="hero"><span class="pill">🔐 ADMINISTRATION</span><h2>Gestion des publications</h2>
- <p class="muted">Prototype de gestion locale. Cette page n'est pas encore protégée : ne partage pas cette version comme si elle était sécurisée.</p></div>
- <div class="card">
- <h3>Publier un pronostic</h3>
- <label>Catégorie</label><select id="category"><option>Football</option><option>FIFA / eSoccer</option><option>Autre</option></select>
- <label>Championnat</label><input id="championnat" placeholder="Ex. Premier League, FIFA">
- <label>Match</label><input id="match" placeholder="Équipe A - Équipe B">
- <label>Pronostic</label><input id="prediction" placeholder="Ex. Victoire équipe A">
- <label>Type de publication</label><select id="kind"><option>Gratuit</option><option>Premium</option></select>
- <label>Cote (facultatif)</label><input id="odds" placeholder="Ex. 1.85">
- <button class="primary" onclick="publier()">Publier</button><p id="adminMsg" class="muted"></p>
- </div>
- <div class="card">
- <h3>🎟️ Créer un code de référence</h3>
- <p class="muted">Ce code est une référence interne, pas un coupon de bookmaker ni un véritable système d'abonnement sécurisé.</p>
- <button class="secondary" onclick="creerCoupon()">Générer un code</button><p id="couponMsg" class="green"></p>
- </div>
- <div class="card"><h3>Gérer les publications</h3><div id="adminList"></div></div>
-</section>
-
-<section class="page" id="telegram">
- <div class="hero"><h2>📲 Rejoins Predixa</h2><p>Retrouve les publications sur notre canal officiel.</p>
- <a class="btn primary" href="https://t.me/predixaorg" target="_blank" rel="noopener">Ouvrir Telegram ↗</a></div>
+<section id="premium" hidden>
+  <h2>👑 Choisir Premium</h2>
+  <p class="muted">Sélectionnez une formule pour découvrir les modalités d'activation.</p>
+  <div class="plans">
+    <div class="plan">
+      <h3>1 jour</h3><div class="price">100 F</div>
+      <small>Accès pendant 24 heures</small><br><br>
+      <button class="primary" onclick="choosePlan('1 jour',100)">Choisir</button>
+    </div>
+    <div class="plan">
+      <h3>1 semaine</h3><div class="price">500 F</div>
+      <small>Accès pendant 7 jours</small><br><br>
+      <button class="primary" onclick="choosePlan('1 semaine',500)">Choisir</button>
+    </div>
+    <div class="plan">
+      <h3>1 mois</h3><div class="price">3 000 F</div>
+      <small><s>5 000 F</s> • 30 jours</small><br><br>
+      <button class="primary" onclick="choosePlan('1 mois',3000)">Choisir</button>
+    </div>
+  </div>
+  <div class="match">
+    <h3>Activer un code Premium</h3>
+    <p class="muted">Cette fonctionnalité sera activée après la connexion sécurisée à Supabase.</p>
+    <input id="premiumCode" placeholder="Ton code Premium" autocomplete="off">
+    <button class="primary" onclick="redeemCode()">Vérifier mon code</button>
+    <p id="codeMessage" class="muted"></p>
+  </div>
+  <div class="match">
+    <h3>💳 Paiement</h3>
+    <p>Les paiements MTN Money et Wave seront configurés après la mise en place du prestataire de paiement.</p>
+    <a href="https://t.me/predixaorg" target="_blank" rel="noopener">Contacter Predixa sur Telegram</a>
+  </div>
 </section>
 </main>
 
-<nav class="bottom">
- <button class="active" onclick="ouvrir('home',this)"><span>⌂</span>Accueil</button>
- <button onclick="ouvrir('football',this)"><span>⚽</span>Football</button>
- <button onclick="ouvrir('fifa',this)"><span>🎮</span>FIFA</button>
- <button onclick="ouvrir('picks',this)"><span>🎯</span>Pronos</button>
- <button onclick="ouvrir('premium',this)"><span>👑</span>Premium</button>
- <button onclick="ouvrir('history',this)"><span>📊</span>Historique</button>
- <button onclick="ouvrir('admin',this)"><span>⚙️</span>Admin</button>
-</nav>
-
-<footer>© 2026 PREDIXA PRO · Les pronostics comportent des risques. Aucun gain n'est garanti.<br><a href="https://t.me/predixaorg">Telegram officiel</a></footer>
+<footer>© 2026 Predixa • Pronostics à titre informatif • Jouez de manière responsable.</footer>
 
 <script>
-const KEY='predixa_pro_posts_v3';
-let activeFilter='Tous';
-function lire(){try{return JSON.parse(localStorage.getItem(KEY)||'[]')}catch(e){return []}}
-function sauver(a){localStorage.setItem(KEY,JSON.stringify(a))}
-function ouvrir(id,btn){
- document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===id));
- document.querySelectorAll('.bottom button').forEach(b=>b.classList.remove('active'));
- if(btn)btn.classList.add('active');
- else document.querySelectorAll('.bottom button').forEach(b=>{if(b.getAttribute('onclick')?.includes("'"+id+"'"))b.classList.add('active')});
- window.scrollTo(0,0);rendre();
+function showPage(id,button){
+  document.querySelectorAll('main section').forEach(s=>s.hidden=true);
+  document.getElementById(id).hidden=false;
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+  if(button)button.classList.add('active');
+  window.scrollTo(0,0);
 }
-function filtre(f,btn){activeFilter=f;document.querySelectorAll('#quickTabs button').forEach(b=>b.classList.remove('active'));btn.classList.add('active');rendre()}
-function chercher(q){
- q=(q||'').toLowerCase();
- document.querySelectorAll('#matchesHome .card,#matchesFootball .card').forEach(c=>c.classList.toggle('hidden',!c.innerText.toLowerCase().includes(q)));
+function choosePlan(plan,price){
+  alert('Formule choisie : '+plan+' — '+price+' FCFA. Le paiement en ligne sera activé après sa configuration.');
 }
-function ech(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-function publier(){
- let match=document.getElementById('match').value.trim(),prediction=document.getElementById('prediction').value.trim();
- if(!match||!prediction){document.getElementById('adminMsg').textContent='Remplis le match et le pronostic.';return}
- let a=lire();a.unshift({id:Date.now(),category:category.value,championnat:championnat.value.trim(),match,prediction,kind:kind.value,odds:odds.value.trim(),result:'En attente',date:new Date().toLocaleString('fr-FR')});sauver(a);
- document.getElementById('adminMsg').textContent='Pronostic enregistré sur cet appareil.';
- ['championnat','match','prediction','odds'].forEach(id=>document.getElementById(id).value='');rendre()
+function redeemCode(){
+  const code=document.getElementById('premiumCode').value.trim();
+  const message=document.getElementById('codeMessage');
+  if(!code){message.textContent='Entre ton code Premium.';return;}
+  message.textContent='La vérification des codes sera disponible après la connexion sécurisée à Supabase.';
 }
-function carte(p,admin=false){
- return `<div class="card"><div class="league"><span>🏆</span><div>${ech(p.championnat||p.category)}<div class="muted">${ech(p.date)}</div></div><span class="pill">${ech(p.kind)}</span></div><div class="match"><div class="team">${ech(p.match)}</div><div class="vs">PRONO<br><b class="green">${ech(p.prediction)}</b></div></div>${p.odds?`<p class="muted">Cote observée : ${ech(p.odds)}</p>`:''}<p class="muted">Résultat : <b>${ech(p.result)}</b></p>${admin?`<button class="secondary" onclick="resultat(${p.id})">Modifier résultat</button> <button class="secondary" onclick="supprimer(${p.id})">Supprimer</button>`:''}</div>`
-}
-function rendre(){
- let a=lire();
- let publicPosts=a.filter(p=>p.kind==='Gratuit');
- let fifa=a.filter(p=>p.category==='FIFA / eSoccer'&&p.kind==='Gratuit');
- let prem=a.filter(p=>p.kind==='Premium');
- matchesHome.innerHTML='<div class="card"><div class="league">🏆 Football <span class="pill">EN ATTENTE DE L’API</span></div><p class="muted">Les matchs et logos officiels apparaîtront après connexion de la clé API côté serveur.</p></div>';
- matchesFootball.innerHTML=matchesHome.innerHTML;
- picksList.innerHTML=publicPosts.length?publicPosts.map(p=>carte(p)).join(''):'<div class="card muted">Aucun pronostic gratuit publié.</div>';
- fifaList.innerHTML=fifa.length?fifa.map(p=>carte(p)).join(''):'<div class="card muted">Aucun pronostic FIFA/eSoccer publié.</div>';
- premiumList.innerHTML=prem.length?prem.map(p=>carte(p)).join(''):'<div class="card muted">Aucune publication Premium disponible.</div>';
- historyList.innerHTML=a.filter(p=>p.result!=='En attente').length?a.filter(p=>p.result!=='En attente').map(p=>carte(p)).join(''):'<div class="card muted">Aucun résultat final enregistré.</div>';
- adminList.innerHTML=a.length?a.map(p=>carte(p,true)).join(''):'<p class="muted">Aucune publication.</p>';
-}
-function resultat(id){let a=lire(),p=a.find(x=>x.id===id);
+</script>
+</body>
+     </html>
