@@ -116,6 +116,19 @@ input{width:100%;padding:13px;margin:10px 0;background:#07111f;color:white;borde
 <footer>© 2026 Predixa • Pronostics à titre informatif • Jouez de manière responsable.</footer>
 
 <script>
+  const SUPABASE_URL = "https://owxttmiiccyhqvbpkuyo.supabase.co/rest/v1/";
+const SUPABASE_KEY = "sb_publishable_WRVaEqNCEMNQE9tE9o5E0w_xAj5udcU";
+
+const supabaseScript = document.createElement("script");
+supabaseScript.src = "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2";
+supabaseScript.onload = () => {
+  window.predixaDB = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
+  console.log("Predixa connecté à Supabase !");
+};
+document.head.appendChild(supabaseScript);
 function showPage(id,button){
   document.querySelectorAll('main section').forEach(s=>s.hidden=true);
   document.getElementById(id).hidden=false;
