@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#07111f">
+  <title>PREDIXA PRO</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #07111f;
+      color: #f5f7fb;
+    }
+    header {
+      padding: 22px 16px;
+      background: #101e31;
+      border-bottom: 2px solid #16d9a0;
+      text-align: center;
+    }
+    header h1 { margin: 0; color: #16d9a0; font-size: 30px; }
+    header p { color: #a9b8cb; margin-bottom: 0; }
+    nav {
+      display: flex;
+      gap: 8px;
+      padding: 12px;
+      overflow-x: auto;
+      background: #0b1727;
+    }
+    nav button {
+      white-space: nowrap;
+      background: #17263b;
+      color: white;
+      border: 1px solid #30425b;
+      padding: 10px 14px;
+      border-radius: 9px;
+    }
+    main { padding: 16px; max-width: 850px; margin: auto; }
+    .hero {
+      padding: 20px;
+      background: linear-gradient(135deg,#123b38,#14213a);
+      border: 1px solid #235c52;
+      border-radius: 16px;
+      margin-bottom: 20px;
+    }
+    .hero h2 { color: #16d9a0; margin-top: 0; }
+    .badge {
+      display: inline-block;
+      padding: 5px 9px;
+      border-radius: 6px;
+      background: #173d34;
+      color: #16d9a0;
+      font-size: 12px;
+    }
+    .card {
+      background: #101e31;
+      border: 1px solid #25364d;
+      padding: 16px;
+      border-radius: 13px;
+      margin: 12px 0;
+    }
+    .muted { color: #a9b8cb; font-size: 14px; }
+    .green { color: #16d9a0; }
+    .btn {
+      display: inline-block;
+      background: #16d9a0;
+      color: #06151a;
+      padding: 12px 16px;
+      border: none;
+      border-radius: 9px;
+      text-decoration: none;
+      font-weight: bold;
+      margin-top: 8px;
+    }
+    .secondary {
+      background: #1a2a40;
+      color: white;
+      border: 1px solid #30425b;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 12px;
+      margin: 7px 0 13px;
+      border-radius: 8px;
+      border: 1px solid #30425b;
+      background: #07111f;
+      color: white;
+    }
+    label { color: #c9d4e3; font-size: 14px; }
+    section { margin-bottom: 25px; }
+    footer {
+      padding: 25px;
+      text-align: center;
+      color: #8798ae;
+      border-top: 1px solid #25364d;
+    }
+    .hidden { display: none; }
+    button { cursor: pointer; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>⚡ PREDIXA PRO</h1>
+  <p>Analyse • Pronostics • Résultats</p>
+</header>
+
+<nav>
+  <button onclick="showPage('accueil')">Accueil</button>
+  <button onclick="showPage('pronostics')">Pronostics</button>
+  <button onclick="showPage('historique')">Historique</button>
+  <button onclick="showPage('premium')">Premium</button>
+</nav>
+
+<main>
+  <section id="accueil">
+    <div class="hero">
+      <span class="badge">PLATEFORME DE PRONOSTICS</span>
+      <h2>Bienvenue sur PREDIXA PRO</h2>
+      <p>Retrouve les pronostics football, les analyses et les résultats au même endroit.</p>
+      <button class="btn" onclick="showPage('pronostics')">Voir les pronostics</button>
+      <br>
+      <a class="btn secondary" href="https://t.me/predixaorg" target="_blank" rel="noopener">Rejoindre Telegram ↗</a>
+    </div>
+
+    <div class="card">
+      <h3>⚽ Pronostics football</h3>
+      <p class="muted">Les rencontres publiées seront affichées ici.</p>
+    </div>
+    <div class="card">
+      <h3>🎮 FIFA / eSoccer</h3>
+      <p class="muted">Espace prévu pour tes pronostics manuels.</p>
+    </div>
+    <div class="card">
+      <h3>📊 Historique des résultats</h3>
+      <p class="muted">Consulte les résultats enregistrés sur cet appareil.</p>
+    </div>
+  </section>
+
+  <section id="pronostics" class="hidden">
+    <h2>📋 Pronostics publiés</h2>
+    <p class="muted">Les pronostics que tu ajoutes depuis cet appareil apparaîtront ici.</p>
+    <div id="liste"></div>
+  </section>
+
+  <section id="historique" class="hidden">
+    <h2>📊 Historique</h2>
+    <div id="historiqueListe"></div>
+  </section>
+
+  <section id="premium" class="hidden">
+    <div class="hero">
+      <h2>👑 PREDIXA PREMIUM</h2>
+      <p>Un espace réservé aux pronostics Premium.</p>
+      <label for="codePremium">Code Premium</label>
+      <input id="codePremium" placeholder="Entre ton code">
+      <button class="btn" onclick="verifierCode()">Vérifier le code</button>
+      <p id="messagePremium" class="muted"></p>
+    </div>
+  </section>
+
+  <section id="admin">
+    <div class="card">
+      <h2>🔐 Espace de publication</h2>
+      <p class="muted">Prototype de démonstration : cette section n'est pas encore protégée par un vrai compte administrateur.</p>
+
+      <label for="sport">Catégorie</label>
+      <select id="sport">
+        <option>Football</option>
+        <option>FIFA / eSoccer</option>
+        <option>Autre sport</option>
+      </select>
+
+      <label for="match">Match</label>
+      <input id="match" placeholder="Ex. Équipe A - Équipe B">
+
+      <label for="pari">Pronostic</label>
+      <input id="pari" placeholder="Ex. Plus de 1,5 buts">
+
+      <label for="type">Publication</label>
+      <select id="type">
+        <option>Gratuit</option>
+        <option>Premium</option>
+      </select>
+
+      <button class="btn" onclick="ajouterPronostic()">Publier le pronostic</button>
+      <p id="messageAdmin" class="muted"></p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <p>© 2026 PREDIXA PRO</p>
+  <p>Les pronostics comportent des risques et aucun gain n'est garanti.</p>
+  <a href="https://t.me/predixaorg" class="green">Notre Telegram</a>
+</footer>
+
+<script>
+  const cle = "predixa_pronostics_v1";
+
+  function lire() {
+    try {
+      return JSON.parse(localStorage.getItem(cle) || "[]");
+    } catch (e) {
+      return [];
+    }
+  }
+
+  function enregistrer(donnees) {
+    localStorage.setItem(cle, JSON.stringify(donnees));
+  }
+
+  function showPage(page) {
+    ["accueil", "pronostics", "historique", "premium"].forEach(id => {
+      document.getElementById(id).classList.toggle("hidden", id !== page);
+    });
+    if (page === "pronostics") afficherPronostics();
+    if (page === "historique") afficherHistorique();
+    window.scrollTo(0, 0);
+  }
+
+  function ajouterPronostic() {
+    const match = document.getElementById("match").value.trim();
+    const pari = document.getElementById("pari").value.trim();
+    const sport = document.getElementById("sport").value;
+    const type = document.getElementById("type").value;
+
+    if (!match || !pari) {
+      document.getElementById("messageAdmin").textContent =
+        "Remplis le match et le pronostic.";
+      return;
+    }
+
+    const donnees = lire();
+    donnees.unshift({
+      id: Date.now(),
+      sport,
+      match,
+      pari,
+      type,
+      resultat: "En attente",
+      date: new Date().toLocaleString("fr-FR")
+    });
+
+    enregistrer(donnees);
+    document.getElementById("match").value = "";
+    document.getElementById("pari").value = "";
+    document.getElementById("messageAdmin").textContent =
+      "Pronostic enregistré sur cet appareil.";
+    afficherPronostics();
+  }
+
+  function afficherPronostics() {
+    const liste = document.getElementById("liste");
+    const donnees = lire();
+
+    if (!donnees.length) {
+      liste.innerHTML = '<div class="card">Aucun pronostic publié pour le moment.</div>';
+      return;
+    }
+
+    liste.innerHTML = donnees.map(p => `
+      <div class="card">
+        <span class="badge">${echapper(p.type)}</span>
+        <p class="muted">${echapper(p.sport)} · ${echapper(p.date)}</p>
+        <h3>${echapper(p.match)}</h3>
+        <p>Pronostic : <strong class="green">${echapper(p.pari)}</strong></p>
+        <p class="muted">Résultat : ${echapper(p.resultat)}</p>
+      </div>
+    `).join("");
+  }
+
+  function afficherHistorique() {
+    const liste = document.getElementById("historiqueListe");
+    const termines = lire().filter(p => p.resultat !== "En attente");
+
+    liste.innerHTML = termines.length
+      ? termines.map(p => `
+          <div class="card">
+            <h3>${echapper(p.match)}</h3>
+            <p>${echapper(p.pari)}</p>
+            <strong>${echapper(p.resultat)}</strong>
+          </div>
+        `).join("")
+      : '<div class="card">Aucun résultat enregistré pour le moment.</div>';
+  }
+
+  function verifierCode() {
+    document.getElementById("messagePremium").textContent =
+      "La validation Premium sécurisée sera activée dans la prochaine version.";
+  }
+
+  function echapper(valeur) {
+    return String(valeur).replace(/[&<>"']/g, c => ({
+      "&": "&amp;", "<": "&lt;", ">": "&gt;",
+      '"': "&quot;", "'": "&#39;"
+    })[c]);
+  }
+
+  afficherPronostics();
+</script>
+</body>
+  </html><!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#07111f">
+  <title>PREDIXA PRO</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #07111f;
+      color: #f5f7fb;
+    }
+    header {
+      padding: 22px 16px;
+      background: #101e31;
+      border-bottom: 2px solid #16d9a0;
+      text-align: center;
+    }
+    header h1 { margin: 0; color: #16d9a0; font-size: 30px; }
+    header p { color: #a9b8cb; margin-bottom: 0; }
+    nav {
+      display: flex;
+      gap: 8px;
+      padding: 12px;
+      overflow-x: auto;
+      background: #0b1727;
+    }
+    nav button {
+      white-space: nowrap;
+      background: #17263b;
+      color: white;
+      border: 1px solid #30425b;
+      padding: 10px 14px;
+      border-radius: 9px;
+    }
+    main { padding: 16px; max-width: 850px; margin: auto; }
+    .hero {
+      padding: 20px;
+      background: linear-gradient(135deg,#123b38,#14213a);
+      border: 1px solid #235c52;
+      border-radius: 16px;
+      margin-bottom: 20px;
+    }
+    .hero h2 { color: #16d9a0; margin-top: 0; }
+    .badge {
+      display: inline-block;
+      padding: 5px 9px;
+      border-radius: 6px;
+      background: #173d34;
+      color: #16d9a0;
+      font-size: 12px;
+    }
+    .card {
+      background: #101e31;
+      border: 1px solid #25364d;
+      padding: 16px;
+      border-radius: 13px;
+      margin: 12px 0;
+    }
+    .muted { color: #a9b8cb; font-size: 14px; }
+    .green { color: #16d9a0; }
+    .btn {
+      display: inline-block;
+      background: #16d9a0;
+      color: #06151a;
+      padding: 12px 16px;
+      border: none;
+      border-radius: 9px;
+      text-decoration: none;
+      font-weight: bold;
+      margin-top: 8px;
+    }
+    .secondary {
+      background: #1a2a40;
+      color: white;
+      border: 1px solid #30425b;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 12px;
+      margin: 7px 0 13px;
+      border-radius: 8px;
+      border: 1px solid #30425b;
+      background: #07111f;
+      color: white;
+    }
+    label { color: #c9d4e3; font-size: 14px; }
+    section { margin-bottom: 25px; }
+    footer {
+      padding: 25px;
+      text-align: center;
+      color: #8798ae;
+      border-top: 1px solid #25364d;
+    }
+    .hidden { display: none; }
+    button { cursor: pointer; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>⚡ PREDIXA PRO</h1>
+  <p>Analyse • Pronostics • Résultats</p>
+</header>
+
+<nav>
+  <button onclick="showPage('accueil')">Accueil</button>
+  <button onclick="showPage('pronostics')">Pronostics</button>
+  <button onclick="showPage('historique')">Historique</button>
+  <button onclick="showPage('premium')">Premium</button>
+</nav>
+
+<main>
+  <section id="accueil">
+    <div class="hero">
+      <span class="badge">PLATEFORME DE PRONOSTICS</span>
+      <h2>Bienvenue sur PREDIXA PRO</h2>
+      <p>Retrouve les pronostics football, les analyses et les résultats au même endroit.</p>
+      <button class="btn" onclick="showPage('pronostics')">Voir les pronostics</button>
+      <br>
+      <a class="btn secondary" href="https://t.me/predixaorg" target="_blank" rel="noopener">Rejoindre Telegram ↗</a>
+    </div>
+
+    <div class="card">
+      <h3>⚽ Pronostics football</h3>
+      <p class="muted">Les rencontres publiées seront affichées ici.</p>
+    </div>
+    <div class="card">
+      <h3>🎮 FIFA / eSoccer</h3>
+      <p class="muted">Espace prévu pour tes pronostics manuels.</p>
+    </div>
+    <div class="card">
+      <h3>📊 Historique des résultats</h3>
+      <p class="muted">Consulte les résultats enregistrés sur cet appareil.</p>
+    </div>
+  </section>
+
+  <section id="pronostics" class="hidden">
+    <h2>📋 Pronostics publiés</h2>
+    <p class="muted">Les pronostics que tu ajoutes depuis cet appareil apparaîtront ici.</p>
+    <div id="liste"></div>
+  </section>
+
+  <section id="historique" class="hidden">
+    <h2>📊 Historique</h2>
+    <div id="historiqueListe"></div>
+  </section>
+
+  <section id="premium" class="hidden">
+    <div class="hero">
+      <h2>👑 PREDIXA PREMIUM</h2>
+      <p>Un espace réservé aux pronostics Premium.</p>
+      <label for="codePremium">Code Premium</label>
+      <input id="codePremium" placeholder="Entre ton code">
+      <button class="btn" onclick="verifierCode()">Vérifier le code</button>
+      <p id="messagePremium" class="muted"></p>
+    </div>
+  </section>
+
+  <section id="admin">
+    <div class="card">
+      <h2>🔐 Espace de publication</h2>
+      <p class="muted">Prototype de démonstration : cette section n'est pas encore protégée par un vrai compte administrateur.</p>
+
+      <label for="sport">Catégorie</label>
+      <select id="sport">
+        <option>Football</option>
+        <option>FIFA / eSoccer</option>
+        <option>Autre sport</option>
+      </select>
+
+      <label for="match">Match</label>
+      <input id="match" placeholder="Ex. Équipe A - Équipe B">
+
+      <label for="pari">Pronostic</label>
+      <input id="pari" placeholder="Ex. Plus de 1,5 buts">
+
+      <label for="type">Publication</label>
+      <select id="type">
+        <option>Gratuit</option>
+        <option>Premium</option>
+      </select>
+
+      <button class="btn" onclick="ajouterPronostic()">Publier le pronostic</button>
+      <p id="messageAdmin" class="muted"></p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <p>© 2026 PREDIXA PRO</p>
+  <p>Les pronostics comportent des risques et aucun gain n'est garanti.</p>
+  <a href="https://t.me/predixaorg" class="green">Notre Telegram</a>
+</footer>
+
+<script>
+  const cle = "predixa_pronostics_v1";
+
+  function lire() {
+    try {
+      return JSON.parse(localStorage.getItem(cle) || "[]");
+    } catch (e) {
+      return [];
+    }
+  }
+
+  function enregistrer(donnees) {
+    localStorage.setItem(cle, JSON.stringify(donnees));
+  }
+
+  function showPage(page) {
+    ["accueil", "pronostics", "historique", "premium"].forEach(id => {
+      document.getElementById(id).classList.toggle("hidden", id !== page);
+    });
+    if (page === "pronostics") afficherPronostics();
+    if (page === "historique") afficherHistorique();
+    window.scrollTo(0, 0);
+  }
+
+  function ajouterPronostic() {
+    const match = document.getElementById("match").value.trim();
+    const pari = document.getElementById("pari").value.trim();
+    const sport = document.getElementById("sport").value;
+    const type = document.getElementById("type").value;
+
+    if (!match || !pari) {
+      document.getElementById("messageAdmin").textContent =
+        "Remplis le match et le pronostic.";
+      return;
+    }
+
+    const donnees = lire();
+    donnees.unshift({
+      id: Date.now(),
+      sport,
+      match,
+      pari,
+      type,
+      resultat: "En attente",
+      date: new Date().toLocaleString("fr-FR")
+    });
+
+    enregistrer(donnees);
+    document.getElementById("match").value = "";
+    document.getElementById("pari").value = "";
+    document.getElementById("messageAdmin").textContent =
+      "Pronostic enregistré sur cet appareil.";
+    afficherPronostics();
+  }
+
+  function afficherPronostics() {
+    const liste = document.getElementById("liste");
+    const donnees = lire();
+
+    if (!donnees.length) {
+      liste.innerHTML = '<div class="card">Aucun pronostic publié pour le moment.</div>';
+      return;
+    }
+
+    liste.innerHTML = donnees.map(p => `
+      <div class="card">
+        <span class="badge">${echapper(p.type)}</span>
+        <p class="muted">${echapper(p.sport)} · ${echapper(p.date)}</p>
+        <h3>${echapper(p.match)}</h3>
+        <p>Pronostic : <strong class="green">${echapper(p.pari)}</strong></p>
+        <p class="muted">Résultat : ${echapper(p.resultat)}</p>
+      </div>
+    `).join("");
+  }
+
+  function afficherHistorique() {
+    const liste = document.getElementById("historiqueListe");
+    const termines = lire().filter(p => p.resultat !== "En attente");
+
+    liste.innerHTML = termines.length
+      ? termines.map(p => `
+          <div class="card">
+            <h3>${echapper(p.match)}</h3>
+            <p>${echapper(p.pari)}</p>
+            <strong>${echapper(p.resultat)}</strong>
+          </div>
+        `).join("")
+      : '<div class="card">Aucun résultat enregistré pour le moment.</div>';
+  }
+
+  function verifierCode() {
+    document.getElementById("messagePremium").textContent =
+      "La validation Premium sécurisée sera activée dans la prochaine version.";
+  }
+
+  function echapper(valeur) {
+    return String(valeur).replace(/[&<>"']/g, c => ({
+      "&": "&amp;", "<": "&lt;", ">": "&gt;",
+      '"': "&quot;", "'": "&#39;"
+    })[c]);
+  }
+
+  afficherPronostics();
+</script>
+</body>
+</html><!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#07111f">
+  <title>PREDIXA PRO</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #07111f;
+      color: #f5f7fb;
+    }
+    header {
+      padding: 22px 16px;
+      background: #101e31;
+      border-bottom: 2px solid #16d9a0;
+      text-align: center;
+    }
+    header h1 { margin: 0; color: #16d9a0; font-size: 30px; }
+    header p { color: #a9b8cb; margin-bottom: 0; }
+    nav {
+      display: flex;
+      gap: 8px;
+      padding: 12px;
+      overflow-x: auto;
+      background: #0b1727;
+    }
+    nav button {
+      white-space: nowrap;
+      background: #17263b;
+      color: white;
+      border: 1px solid #30425b;
+      padding: 10px 14px;
+      border-radius: 9px;
+    }
+    main { padding: 16px; max-width: 850px; margin: auto; }
+    .hero {
+      padding: 20px;
+      background: linear-gradient(135deg,#123b38,#14213a);
+      border: 1px solid #235c52;
+      border-radius: 16px;
+      margin-bottom: 20px;
+    }
+    .hero h2 { color: #16d9a0; margin-top: 0; }
+    .badge {
+      display: inline-block;
+      padding: 5px 9px;
+      border-radius: 6px;
+      background: #173d34;
+      color: #16d9a0;
+      font-size: 12px;
+    }
+    .card {
+      background: #101e31;
+      border: 1px solid #25364d;
+      padding: 16px;
+      border-radius: 13px;
+      margin: 12px 0;
+    }
+    .muted { color: #a9b8cb; font-size: 14px; }
+    .green { color: #16d9a0; }
+    .btn {
+      display: inline-block;
+      background: #16d9a0;
+      color: #06151a;
+      padding: 12px 16px;
+      border: none;
+      border-radius: 9px;
+      text-decoration: none;
+      font-weight: bold;
+      margin-top: 8px;
+    }
+    .secondary {
+      background: #1a2a40;
+      color: white;
+      border: 1px solid #30425b;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 12px;
+      margin: 7px 0 13px;
+      border-radius: 8px;
+      border: 1px solid #30425b;
+      background: #07111f;
+      color: white;
+    }
+    label { color: #c9d4e3; font-size: 14px; }
+    section { margin-bottom: 25px; }
+    footer {
+      padding: 25px;
+      text-align: center;
+      color: #8798ae;
+      border-top: 1px solid #25364d;
+    }
+    .hidden { display: none; }
+    button { cursor: pointer; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>⚡ PREDIXA PRO</h1>
+  <p>Analyse • Pronostics • Résultats</p>
+</header>
+
+<nav>
+  <button onclick="showPage('accueil')">Accueil</button>
+  <button onclick="showPage('pronostics')">Pronostics</button>
+  <button onclick="showPage('historique')">Historique</button>
+  <button onclick="showPage('premium')">Premium</button>
+</nav>
+
+<main>
+  <section id="accueil">
+    <div class="hero">
+      <span class="badge">PLATEFORME DE PRONOSTICS</span>
+      <h2>Bienvenue sur PREDIXA PRO</h2>
+      <p>Retrouve les pronostics football, les analyses et les résultats au même endroit.</p>
+      <button class="btn" onclick="showPage('pronostics')">Voir les pronostics</button>
+      <br>
+      <a class="btn secondary" href="https://t.me/predixaorg" target="_blank" rel="noopener">Rejoindre Telegram ↗</a>
+    </div>
+
+    <div class="card">
+      <h3>⚽ Pronostics football</h3>
+      <p class="muted">Les rencontres publiées seront affichées ici.</p>
+    </div>
+    <div class="card">
+      <h3>🎮 FIFA / eSoccer</h3>
+      <p class="muted">Espace prévu pour tes pronostics manuels.</p>
+    </div>
+    <div class="card">
+      <h3>📊 Historique des résultats</h3>
+      <p class="muted">Consulte les résultats enregistrés sur cet appareil.</p>
+    </div>
+  </section>
+
+  <section id="pronostics" class="hidden">
+    <h2>📋 Pronostics publiés</h2>
+    <p class="muted">Les pronostics que tu ajoutes depuis cet appareil apparaîtront ici.</p>
+    <div id="liste"></div>
+  </section>
+
+  <section id="historique" class="hidden">
+    <h2>📊 Historique</h2>
+    <div id="historiqueListe"></div>
+  </section>
+
+  <section id="premium" class="hidden">
+    <div class="hero">
+      <h2>👑 PREDIXA PREMIUM</h2>
+      <p>Un espace réservé aux pronostics Premium.</p>
+      <label for="codePremium">Code Premium</label>
+      <input id="codePremium" placeholder="Entre ton code">
+      <button class="btn" onclick="verifierCode()">Vérifier le code</button>
+      <p id="messagePremium" class="muted"></p>
+    </div>
+  </section>
+
+  <section id="admin">
+    <div class="card">
+      <h2>🔐 Espace de publication</h2>
+      <p class="muted">Prototype de démonstration : cette section n'est pas encore protégée par un vrai compte administrateur.</p>
+
+      <label for="sport">Catégorie</label>
+      <select id="sport">
+        <option>Football</option>
+        <option>FIFA / eSoccer</option>
+        <option>Autre sport</option>
+      </select>
+
+      <label for="match">Match</label>
+      <input id="match" placeholder="Ex. Équipe A - Équipe B">
+
+      <label for="pari">Pronostic</label>
+      <input id="pari" placeholder="Ex. Plus de 1,5 buts">
+
+      <label for="type">Publication</label>
+      <select id="type">
+        <option>Gratuit</option>
+        <option>Premium</option>
+      </select>
+
+      <button class="btn" onclick="ajouterPronostic()">Publier le pronostic</button>
+      <p id="messageAdmin" class="muted"></p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <p>© 2026 PREDIXA PRO</p>
+  <p>Les pronostics comportent des risques et aucun gain n'est garanti.</p>
+  <a href="https://t.me/predixaorg" class="green">Notre Telegram</a>
+</footer>
+
+<script>
+  const cle = "predixa_pronostics_v1";
+
+  function lire() {
+    try {
+      return JSON.parse(localStorage.getItem(cle) || "[]");
+    } catch (e) {
+      return [];
+    }
+  }
+
+  function enregistrer(donnees) {
+    localStorage.setItem(cle, JSON.stringify(donnees));
+  }
+
+  function showPage(page) {
+    ["accueil", "pronostics", "historique", "premium"].forEach(id => {
+      document.getElementById(id).classList.toggle("hidden", id !== page);
+    });
+    if (page === "pronostics") afficherPronostics();
+    if (page === "historique") afficherHistorique();
+    window.scrollTo(0, 0);
+  }
+
+  function ajouterPronostic() {
+    const match = document.getElementById("match").value.trim();
+    const pari = document.getElementById("pari").value.trim();
+    const sport = document.getElementById("sport").value;
+    const type = document.getElementById("type").value;
+
+    if (!match || !pari) {
+      document.getElementById("messageAdmin").textContent =
+        "Remplis le match et le pronostic.";
+      return;
+    }
+
+    const donnees = lire();
+    donnees.unshift({
+      id: Date.now(),
+      sport,
+      match,
+      pari,
+      type,
+      resultat: "En attente",
+      date: new Date().toLocaleString("fr-FR")
+    });
+
+    enregistrer(donnees);
+    document.getElementById("match").value = "";
+    document.getElementById("pari").value = "";
+    document.getElementById("messageAdmin").textContent =
+      "Pronostic enregistré sur cet appareil.";
+    afficherPronostics();
+  }
+
+  function afficherPronostics() {
+    const liste = document.getElementById("liste");
+    const donnees = lire();
+
+    if (!donnees.length) {
+      liste.innerHTML = '<div class="card">Aucun pronostic publié pour le moment.</div>';
+      return;
+    }
+
+    liste.innerHTML = donnees.map(p => `
+      <div class="card">
+        <span class="badge">${echapper(p.type)}</span>
+        <p class="muted">${echapper(p.sport)} · ${echapper(p.date)}</p>
+        <h3>${echapper(p.match)}</h3>
+        <p>Pronostic : <strong class="green">${echapper(p.pari)}</strong></p>
+        <p class="muted">Résultat : ${echapper(p.resultat)}</p>
+      </div>
+    `).join("");
+  }
+
+  function afficherHistorique() {
+    const liste = document.getElementById("historiqueListe");
+    const termines = lire().filter(p => p.resultat !== "En attente");
+
+    liste.innerHTML = termines.length
+      ? termines.map(p => `
+          <div class="card">
+            <h3>${echapper(p.match)}</h3>
+            <p>${echapper(p.pari)}</p>
+            <strong>${echapper(p.resultat)}</strong>
+          </div>
+        `).join("")
+      : '<div class="card">Aucun résultat enregistré pour le moment.</div>';
+  }
+
+  function verifierCode() {
+    document.getElementById("messagePremium").textContent =
+      "La validation Premium sécurisée sera activée dans la prochaine version.";
+  }
+
+  function echapper(valeur) {
+    return String(valeur).replace(/[&<>"']/g, c => ({
+      "&": "&amp;", "<": "&lt;", ">": "&gt;",
+      '"': "&quot;", "'": "&#39;"
+    })[c]);
+  }
+
+  afficherPronostics();
+</script>
+</body>
+  </html><!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#07111f">
+  <title>PREDIXA PRO</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #07111f;
+      color: #f5f7fb;
+    }
+    header {
+      padding: 22px 16px;
+      background: #101e31;
+      border-bottom: 2px solid #16d9a0;
+      text-align: center;
+    }
+    header h1 { margin: 0; color: #16d9a0; font-size: 30px; }
+    header p { color: #a9b8cb; margin-bottom: 0; }
+    nav {
+      display: flex;
+      gap: 8px;
+      padding: 12px;
+      overflow-x: auto;
+      background: #0b1727;
+    }
+    nav button {
+      white-space: nowrap;
+      background: #17263b;
+      color: white;
+      border: 1px solid #30425b;
+      padding: 10px 14px;
+      border-radius: 9px;
+    }
+    main { padding: 16px; max-width: 850px; margin: auto; }
+    .hero {
+      padding: 20px;
+      background: linear-gradient(135deg,#123b38,#14213a);
+      border: 1px solid #235c52;
+      border-radius: 16px;
+      margin-bottom: 20px;
+    }
+    .hero h2 { color: #16d9a0; margin-top: 0; }
+    .badge {
+      display: inline-block;
+      padding: 5px 9px;
+      border-radius: 6px;
+      background: #173d34;
+      color: #16d9a0;
+      font-size: 12px;
+    }
+    .card {
+      background: #101e31;
+      border: 1px solid #25364d;
+      padding: 16px;
+      border-radius: 13px;
+      margin: 12px 0;
+    }
+    .muted { color: #a9b8cb; font-size: 14px; }
+    .green { color: #16d9a0; }
+    .btn {
+      display: inline-block;
+      background: #16d9a0;
+      color: #06151a;
+      padding: 12px 16px;
+      border: none;
+      border-radius: 9px;
+      text-decoration: none;
+      font-weight: bold;
+      margin-top: 8px;
+    }
+    .secondary {
+      background: #1a2a40;
+      color: white;
+      border: 1px solid #30425b;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 12px;
+      margin: 7px 0 13px;
+      border-radius: 8px;
+      border: 1px solid #30425b;
+      background: #07111f;
+      color: white;
+    }
+    label { color: #c9d4e3; font-size: 14px; }
+    section { margin-bottom: 25px; }
+    footer {
+      padding: 25px;
+      text-align: center;
+      color: #8798ae;
+      border-top: 1px solid #25364d;
+    }
+    .hidden { display: none; }
+    button { cursor: pointer; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>⚡ PREDIXA PRO</h1>
+  <p>Analyse • Pronostics • Résultats</p>
+</header>
+
+<nav>
+  <button onclick="showPage('accueil')">Accueil</button>
+  <button onclick="showPage('pronostics')">Pronostics</button>
+  <button onclick="showPage('historique')">Historique</button>
+  <button onclick="showPage('premium')">Premium</button>
+</nav>
+
+<main>
+  <section id="accueil">
+    <div class="hero">
+      <span class="badge">PLATEFORME DE PRONOSTICS</span>
+      <h2>Bienvenue sur PREDIXA PRO</h2>
+      <p>Retrouve les pronostics football, les analyses et les résultats au même endroit.</p>
+      <button class="btn" onclick="showPage('pronostics')">Voir les pronostics</button>
+      <br>
+      <a class="btn secondary" href="https://t.me/predixaorg" target="_blank" rel="noopener">Rejoindre Telegram ↗</a>
+    </div>
+
+    <div class="card">
+      <h3>⚽ Pronostics football</h3>
+      <p class="muted">Les rencontres publiées seront affichées ici.</p>
+    </div>
+    <div class="card">
+      <h3>🎮 FIFA / eSoccer</h3>
+      <p class="muted">Espace prévu pour tes pronostics manuels.</p>
+    </div>
+    <div class="card">
+      <h3>📊 Historique des résultats</h3>
+      <p class="muted">Consulte les résultats enregistrés sur cet appareil.</p>
+    </div>
+  </section>
+
+  <section id="pronostics" class="hidden">
+    <h2>📋 Pronostics publiés</h2>
+    <p class="muted">Les pronostics que tu ajoutes depuis cet appareil apparaîtront ici.</p>
+    <div id="liste"></div>
+  </section>
+
+  <section id="historique" class="hidden">
+    <h2>📊 Historique</h2>
+    <div id="historiqueListe"></div>
+  </section>
+
+  <section id="premium" class="hidden">
+    <div class="hero">
+      <h2>👑 PREDIXA PREMIUM</h2>
+      <p>Un espace réservé aux pronostics Premium.</p>
+      <label for="codePremium">Code Premium</label>
+      <input id="codePremium" placeholder="Entre ton code">
+      <button class="btn" onclick="verifierCode()">Vérifier le code</button>
+      <p id="messagePremium" class="muted"></p>
+    </div>
+  </section>
+
+  <section id="admin">
+    <div class="card">
+      <h2>🔐 Espace de publication</h2>
+      <p class="muted">Prototype de démonstration : cette section n'est pas encore protégée par un vrai compte administrateur.</p>
+
+      <label for="sport">Catégorie</label>
+      <select id="sport">
+        <option>Football</option>
+        <option>FIFA / eSoccer</option>
+        <option>Autre sport</option>
+      </select>
+
+      <label for="match">Match</label>
+      <input id="match" placeholder="Ex. Équipe A - Équipe B">
+
+      <label for="pari">Pronostic</label>
+      <input id="pari" placeholder="Ex. Plus de 1,5 buts">
+
+      <label for="type">Publication</label>
+      <select id="type">
+        <option>Gratuit</option>
+        <option>Premium</option>
+      </select>
+
+      <button class="btn" onclick="ajouterPronostic()">Publier le pronostic</button>
+      <p id="messageAdmin" class="muted"></p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <p>© 2026 PREDIXA PRO</p>
+  <p>Les pronostics comportent des risques et aucun gain n'est garanti.</p>
+  <a href="https://t.me/predixaorg" class="green">Notre Telegram</a>
+</footer>
+
+<script>
+  const cle = "predixa_pronostics_v1";
+
+  function lire() {
+    try {
+      return JSON.parse(localStorage.getItem(cle) || "[]");
+    } catch (e) {
+      return [];
+    }
+  }
+
+  function enregistrer(donnees) {
+    localStorage.setItem(cle, JSON.stringify(donnees));
+  }
+
+  function showPage(page) {
+    ["accueil", "pronostics", "historique", "premium"].forEach(id => {
+      document.getElementById(id).classList.toggle("hidden", id !== page);
+    });
+    if (page === "pronostics") afficherPronostics();
+    if (page === "historique") afficherHistorique();
+    window.scrollTo(0, 0);
+  }
+
+  function ajouterPronostic() {
+    const match = document.getElementById("match").value.trim();
+    const pari = document.getElementById("pari").value.trim();
+    const sport = document.getElementById("sport").value;
+    const type = document.getElementById("type").value;
+
+    if (!match || !pari) {
+      document.getElementById("messageAdmin").textContent =
+        "Remplis le match et le pronostic.";
+      return;
+    }
+
+    const donnees = lire();
+    donnees.unshift({
+      id: Date.now(),
+      sport,
+      match,
+      pari,
+      type,
+      resultat: "En attente",
+      date: new Date().toLocaleString("fr-FR")
+    });
+
+    enregistrer(donnees);
+    document.getElementById("match").value = "";
+    document.getElementById("pari").value = "";
+    document.getElementById("messageAdmin").textContent =
+      "Pronostic enregistré sur cet appareil.";
+    afficherPronostics();
+  }
+
+  function afficherPronostics() {
+    const liste = document.getElementById("liste");
+    const donnees = lire();
+
+    if (!donnees.length) {
+      liste.innerHTML = '<div class="card">Aucun pronostic publié pour le moment.</div>';
+      return;
+    }
+
+    liste.innerHTML = donnees.map(p => `
+      <div class="card">
+        <span class="badge">${echapper(p.type)}</span>
+        <p class="muted">${echapper(p.sport)} · ${echapper(p.date)}</p>
+        <h3>${echapper(p.match)}</h3>
+        <p>Pronostic : <strong class="green">${echapper(p.pari)}</strong></p>
+        <p class="muted">Résultat : ${echapper(p.resultat)}</p>
+      </div>
+    `).join("");
+  }
+
+  function afficherHistorique() {
+    const liste = document.getElementById("historiqueListe");
+    const termines = lire().filter(p => p.resultat !== "En attente");
+
+    liste.innerHTML = termines.length
+      ? termines.map(p => `
+          <div class="card">
+            <h3>${echapper(p.match)}</h3>
+            <p>${echapper(p.pari)}</p>
+            <strong>${echapper(p.resultat)}</strong>
+          </div>
+        `).join("")
+      : '<div class="card">Aucun résultat enregistré pour le moment.</div>';
+  }
+
+  function verifierCode() {
+    document.getElementById("messagePremium").textContent =
+      "La validation Premium sécurisée sera activée dans la prochaine version.";
+  }
+
+  function echapper(valeur) {
+    return String(valeur).replace(/[&<>"']/g, c => ({
+      "&": "&amp;", "<": "&lt;", ">": "&gt;",
+      '"': "&quot;", "'": "&#39;"
+    })[c]);
+  }
+
+  afficherPronostics();
+</script>
+</body>
+  </html>
