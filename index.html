@@ -1,217 +1,514 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#07111f">
-<title>Predixa — Pronostics sportifs</title>
-<style>
-:root{--bg:#07111f;--card:#101e30;--green:#19e68c;--text:#f5f7fa;--muted:#9baabd}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif}
-header{padding:20px;background:#0c1929;border-bottom:1px solid #203248}
-.logo{font-size:27px;font-weight:900;color:var(--green)}
-.logo span{color:white}
-header p{margin:7px 0 0;color:var(--muted);font-size:13px}
-nav{display:flex;gap:9px;overflow:auto;padding:14px}
-button{border:0;border-radius:9px;padding:12px 15px;font-weight:bold;cursor:pointer}
-.tab{background:#14253a;color:white;white-space:nowrap}
-.tab.active,.primary{background:var(--green);color:#062015}
-main{padding:14px;max-width:750px;margin:auto}
-h2{font-size:19px}
-.notice{padding:14px;background:#102a29;border:1px solid #1a6248;border-radius:12px;color:#b9f9dc;line-height:1.5}
-.match{background:var(--card);border:1px solid #203248;border-radius:14px;padding:16px;margin:12px 0}
-.league{font-size:12px;color:var(--green)}
-.teams{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:18px 0;font-weight:bold}
-.vs{color:var(--muted);font-size:12px}
-.prediction{border-top:1px solid #26364a;padding-top:12px;font-size:14px}
-.badge{display:inline-block;background:#183e34;color:#8fffc6;border-radius:6px;padding:6px 9px}
-.plans{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:10px}
-.plan{background:var(--card);border:1px solid #26384e;border-radius:12px;padding:15px}
-.price{font-size:24px;font-weight:bold;color:var(--green);margin:12px 0}
-small,.muted{color:var(--muted)}
-a{color:var(--green)}
-footer{text-align:center;padding:25px;color:var(--muted);font-size:12px}
-input{width:100%;padding:13px;margin:10px 0;background:#07111f;color:white;border:1px solid #34445a;border-radius:8px}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#07111f">
+  <title>Predixa - Pronostics sportifs</title>
+
+  <style>
+    :root {
+      --bg: #07111f;
+      --card: #101e30;
+      --green: #19e68c;
+      --text: #f5f7fa;
+      --muted: #9baabd;
+      --border: #263648;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, sans-serif;
+    }
+
+    header {
+      padding: 20px;
+      background: #0c1929;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo {
+      font-size: 27px;
+      font-weight: bold;
+      color: var(--green);
+    }
+
+    header p {
+      color: var(--muted);
+      margin-bottom: 0;
+    }
+
+    nav {
+      display: flex;
+      gap: 7px;
+      padding: 12px;
+      overflow-x: auto;
+      background: #0c1929;
+    }
+
+    button {
+      border: 0;
+      border-radius: 9px;
+      padding: 12px 15px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .tab {
+      background: #14253a;
+      color: white;
+      white-space: nowrap;
+    }
+
+    .tab.active {
+      background: var(--green);
+      color: #062015;
+    }
+
+    main {
+      padding: 15px;
+      max-width: 850px;
+      margin: auto;
+    }
+
+    section {
+      display: none;
+    }
+
+    section.active {
+      display: block;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      margin: 12px 0;
+    }
+
+    h2, h3 {
+      margin-top: 0;
+    }
+
+    .muted {
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .primary {
+      background: var(--green);
+      color: #062015;
+      width: 100%;
+      margin-top: 8px;
+    }
+
+    input {
+      display: block;
+      width: 100%;
+      padding: 13px;
+      margin: 10px 0;
+      background: #07111f;
+      border: 1px solid var(--border);
+      color: white;
+      border-radius: 8px;
+    }
+
+    .match {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px;
+      margin: 12px 0;
+    }
+
+    .league {
+      color: var(--green);
+      font-size: 13px;
+    }
+
+    .teams {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 8px;
+      text-align: center;
+      margin: 16px 0;
+    }
+
+    .team {
+      overflow-wrap: anywhere;
+      font-weight: bold;
+    }
+
+    .team img {
+      display: block;
+      width: 35px;
+      height: 35px;
+      object-fit: contain;
+      margin: 0 auto 8px;
+    }
+
+    .score {
+      font-size: 18px;
+      font-weight: bold;
+      white-space: nowrap;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 5px 9px;
+      background: #173e34;
+      color: var(--green);
+      border-radius: 6px;
+      font-size: 12px;
+    }
+
+    .price {
+      font-size: 24px;
+      font-weight: bold;
+      color: var(--green);
+    }
+
+    a {
+      color: var(--green);
+    }
+
+    footer {
+      text-align: center;
+      padding: 25px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+  </style>
 </head>
+
 <body>
+
 <header>
-  <div class="logo">PREDI<span>XA</span> ⚽</div>
-  <p>Analyse sportive • Pronostics • Résultats</p>
+  <div class="logo">PREDI<span style="color:white">XA</span></div>
+  <p>Analyse sportive · Pronostics · Résultats</p>
 </header>
 
 <nav>
-  <button class="tab active" onclick="showPage('home',this)">🏠 Accueil</button>
-  <button class="tab" onclick="showPage('matches',this)">⚽ Matchs</button>
-  <button class="tab" onclick="showPage('premium',this)">👑 Premium</button>
+  <button class="tab active" data-page="home">🏠 Accueil</button>
+  <button class="tab" data-page="matches">⚽ Matchs</button>
+  <button class="tab" data-page="premium">👑 Premium</button>
 </nav>
 
 <main>
-<section id="home">
-  <div class="notice">
-    <strong>Bienvenue sur Predixa !</strong><br>
-    Retrouvez les pronostics sportifs et les offres Premium.
-    Les pronostics sont des estimations, jamais des garanties de gain.
-  </div>
-  <h2>🔥 Nos rubriques</h2>
-  <div class="match">
-    <h3>⚽ Pronostics sportifs</h3>
-    <p class="muted">Consultez les analyses et les matchs à venir.</p>
-    <button class="primary" onclick="showPage('matches')">Voir les matchs</button>
-  </div>
-  <div class="match">
-    <h3>👑 Predixa Premium</h3>
-    <p class="muted">Découvrez nos formules d'accès Premium.</p>
-    <button class="primary" onclick="showPage('premium')">Voir les tarifs</button>
-  </div>
-  <div class="match">
-    <h3>📲 Notre communauté</h3>
-    <p>Retrouvez Predixa sur Telegram.</p>
-    <a href="https://t.me/predixaorg" target="_blank" rel="noopener">Rejoindre le Telegram →</a>
-  </div>
-</section>
 
-<section id="matches" hidden>
-  <h2>⚽ Matchs et pronostics</h2>
-  <div class="notice">Les matchs réels apparaîtront après la connexion de ton API sportive.</div>
-  <div id="matchList"></div>
-</section>
+  <section id="home" class="active">
+    <div class="card">
+      <h2>Bienvenue sur Predixa ! ⚽</h2>
+      <p class="muted">
+        Consulte les rencontres de football et leurs informations.
+        Les pronostics sont des estimations et ne garantissent aucun gain.
+      </p>
+      <button class="primary" onclick="showPage('matches')">
+        Voir les matchs
+      </button>
+    </div>
 
-<section id="premium" hidden>
-  <h2>👑 Choisir Premium</h2>
-  <p class="muted">Sélectionnez une formule pour découvrir les modalités d'activation.</p>
-  <div class="plans">
-    <div class="plan">
-      <h3>1 jour</h3><div class="price">100 F</div>
-      <small>Accès pendant 24 heures</small><br><br>
-      <button class="primary" onclick="choosePlan('1 jour',100)">Choisir</button>
+    <div class="card">
+      <h3>👑 Predixa Premium</h3>
+      <p class="muted">
+        Découvre les offres Premium et les contenus réservés aux abonnés.
+      </p>
+      <button class="primary" onclick="showPage('premium')">
+        Découvrir les offres
+      </button>
     </div>
-    <div class="plan">
-      <h3>1 semaine</h3><div class="price">500 F</div>
-      <small>Accès pendant 7 jours</small><br><br>
-      <button class="primary" onclick="choosePlan('1 semaine',500)">Choisir</button>
+
+    <div class="card">
+      <h3>📢 Notre communauté</h3>
+      <p class="muted">
+        Rejoins le canal Telegram officiel de Predixa.
+      </p>
+      <a href="https://t.me/predixaorg"
+         target="_blank"
+         rel="noopener noreferrer">
+        Rejoindre le Telegram
+      </a>
     </div>
-    <div class="plan">
-      <h3>1 mois</h3><div class="price">3 000 F</div>
-      <small><s>5 000 F</s> • 30 jours</small><br><br>
-      <button class="primary" onclick="choosePlan('1 mois',3000)">Choisir</button>
+  </section>
+
+  <section id="matches">
+    <div class="card">
+      <h2>⚽ Matchs de football</h2>
+      <p class="muted">
+        Rencontres récupérées automatiquement depuis API-FOOTBALL.
+      </p>
+
+      <button class="primary" onclick="chargerMatchs()">
+        🔄 Actualiser les matchs
+      </button>
+
+      <p id="matchStatus" class="muted" aria-live="polite"></p>
     </div>
-  </div>
-  <div class="match">
-    <h3>Activer un code Premium</h3>
-    <p class="muted">Cette fonctionnalité sera activée après la connexion sécurisée à Supabase.</p>
-    <input id="premiumCode" placeholder="Ton code Premium" autocomplete="off">
-    <button class="primary" onclick="redeemCode()">Vérifier mon code</button>
-    <p id="codeMessage" class="muted"></p>
-  </div>
-  <div class="match">
-    <h3>💳 Paiement</h3>
-    <p>Les paiements MTN Money et Wave seront configurés après la mise en place du prestataire de paiement.</p>
-    <a href="https://t.me/predixaorg" target="_blank" rel="noopener">Contacter Predixa sur Telegram</a>
-  </div>
-</section>
+
+    <div id="liste"></div>
+  </section>
+
+  <section id="premium">
+    <div class="card">
+      <h2>👑 Abonnement Premium</h2>
+      <p class="muted">
+        Choisis une formule pour demander l'accès Premium.
+        Le paiement et l'activation automatique doivent être configurés
+        séparément.
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>Accès journalier</h3>
+      <p class="price">100 F CFA</p>
+      <button class="primary"
+        onclick="demanderAbonnement('1 jour', 100)">
+        Choisir cette formule
+      </button>
+    </div>
+
+    <div class="card">
+      <h3>Accès hebdomadaire</h3>
+      <p class="price">500 F CFA</p>
+      <button class="primary"
+        onclick="demanderAbonnement('1 semaine', 500)">
+        Choisir cette formule
+      </button>
+    </div>
+
+    <div class="card">
+      <h3>Accès mensuel</h3>
+      <p class="muted">Tarif habituel : 5 000 F CFA</p>
+      <p class="price">3 000 F CFA</p>
+      <button class="primary"
+        onclick="demanderAbonnement('30 jours', 3000)">
+        Choisir cette formule
+      </button>
+    </div>
+
+    <div class="card">
+      <h3>🎟️ Code Premium</h3>
+      <input id="premiumCode"
+        type="text"
+        placeholder="Entre ton code Premium">
+
+      <button class="primary" onclick="verifierCode()">
+        Vérifier mon code
+      </button>
+
+      <p id="codeMessage" class="muted"></p>
+    </div>
+  </section>
+
 </main>
 
-<footer>© 2026 Predixa • Pronostics à titre informatif • Jouez de manière responsable.</footer>
+<footer>
+  Predixa © 2026 · Pronostics sans garantie de gain
+</footer>
 
 <script>
-  const SUPABASE_URL = "https://owxttmiiccyhqvbpkuyo.supabase.co/rest/v1/";
-const SUPABASE_KEY = "sb_publishable_WRVaEqNCEMNQE9tE9o5E0w_xAj5udcU";
+  /*
+   * Cette adresse appelle la fonction Supabase déjà créée.
+   * La clé API-FOOTBALL reste dans les secrets Supabase.
+   */
+  const FOOTBALL_URL =
+    "https://owxtmiiccyhqvbpkuyo.supabase.co/functions/v1/football-matches";
 
-const supabaseScript = document.createElement("script");
-supabaseScript.src = "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2";
-supabaseScript.onload = () => {
-  window.predixaDB = window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-  );
-  console.log("Predixa connecté à Supabase !");
-};
-document.head.appendChild(supabaseScript);
-function showPage(id,button){
-  document.querySelectorAll('main section').forEach(s=>s.hidden=true);
-  document.getElementById(id).hidden=false;
-  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
-  if(button)button.classList.add('active');
-  window.scrollTo(0,0);
-}
-function choosePlan(plan,price){
-  alert('Formule choisie : '+plan+' — '+price+' FCFA. Le paiement en ligne sera activé après sa configuration.');
-}
-function redeemCode(){
-  const code=document.getElementById('premiumCode').value.trim();
-  const message=document.getElementById('codeMessage');
-  if(!code){message.textContent='Entre ton code Premium.';return;}
-  message.textContent='La vérification des codes sera disponible après la connexion sécurisée à Supabase.';
-}async function chargerMatchs() {
-  const liste = document.getElementById("liste");
+  function showPage(page) {
+    document.querySelectorAll("main section").forEach(section => {
+      section.classList.toggle("active", section.id === page);
+    });
 
-  if (!liste) return;
+    document.querySelectorAll(".tab").forEach(button => {
+      button.classList.toggle("active", button.dataset.page === page);
+    });
 
-  liste.innerHTML = "<p>Chargement des matchs...</p>";
+    window.scrollTo(0, 0);
 
-  try {
-    const { data, error } = await window.predixaDB
-      .from("matches")
-      .select("*");
+    if (page === "matches") {
+      chargerMatchs();
+    }
+  }
 
-    if (error) throw error;
+  document.querySelectorAll(".tab").forEach(button => {
+    button.addEventListener("click", () => {
+      showPage(button.dataset.page);
+    });
+  });
 
-    if (!data || data.length === 0) {
-      liste.innerHTML =
-        "<p>Aucun match disponible pour le moment. Les matchs apparaîtront ici dès leur ajout.</p>";
+  let chargementEnCours = false;
+
+  async function chargerMatchs() {
+    const liste = document.getElementById("liste");
+    const status = document.getElementById("matchStatus");
+
+    if (chargementEnCours) return;
+
+    chargementEnCours = true;
+    liste.replaceChildren();
+    status.textContent = "⏳ Chargement des matchs...";
+
+    try {
+      const response = await fetch(FOOTBALL_URL, {
+        method: "GET",
+        headers: {
+          "Accept": "application/json"
+        }
+      });
+
+      const resultat = await response.json();
+
+      if (!response.ok || resultat.success !== true) {
+        throw new Error(
+          typeof resultat.error === "string"
+            ? resultat.error
+            : JSON.stringify(resultat.error || "Erreur API")
+        );
+      }
+
+      const matchs = resultat.matches || [];
+
+      if (matchs.length === 0) {
+        status.textContent = "Aucun match trouvé pour cette date.";
+        return;
+      }
+
+      status.textContent =
+        `${matchs.length} matchs récupérés pour le ${resultat.date}.`;
+
+      const fragment = document.createDocumentFragment();
+
+      matchs.forEach(match => {
+        const carte = document.createElement("article");
+        carte.className = "match";
+
+        const championnat = document.createElement("p");
+        championnat.className = "league";
+        championnat.textContent =
+          match.league?.name || "Championnat inconnu";
+
+        carte.appendChild(championnat);
+
+        const equipes = document.createElement("div");
+        equipes.className = "teams";
+
+        function creerEquipe(nom, logo) {
+          const bloc = document.createElement("div");
+          bloc.className = "team";
+
+          if (logo) {
+            const image = document.createElement("img");
+            image.src = logo;
+            image.alt = "";
+            image.loading = "lazy";
+            image.onerror = () => image.remove();
+            bloc.appendChild(image);
+          }
+
+          const texte = document.createElement("div");
+          texte.textContent = nom || "Équipe inconnue";
+          bloc.appendChild(texte);
+
+          return bloc;
+        }
+
+        const domicile = match.teams?.home;
+        const exterieur = match.teams?.away;
+
+        const butsDomicile = match.goals?.home;
+        const butsExterieur = match.goals?.away;
+
+        const scoreConnu =
+          butsDomicile !== null &&
+          butsDomicile !== undefined &&
+          butsExterieur !== null &&
+          butsExterieur !== undefined;
+
+        const score = document.createElement("div");
+        score.className = "score";
+        score.textContent = scoreConnu
+          ? `${butsDomicile} - ${butsExterieur}`
+          : "VS";
+
+        equipes.append(
+          creerEquipe(domicile?.name, domicile?.logo),
+          score,
+          creerEquipe(exterieur?.name, exterieur?.logo)
+        );
+
+        carte.appendChild(equipes);
+
+        const date = document.createElement("p");
+        date.className = "muted";
+
+        if (match.fixture?.date) {
+          date.textContent = new Date(
+            match.fixture.date
+          ).toLocaleString("fr-FR", {
+            timeZone: "Africa/Abidjan",
+            dateStyle: "short",
+            timeStyle: "short"
+          });
+        } else {
+          date.textContent = "Horaire indisponible";
+        }
+
+        carte.appendChild(date);
+
+        const statut = document.createElement("span");
+        statut.className = "badge";
+        statut.textContent =
+          match.fixture?.status?.long || "Statut inconnu";
+
+        carte.appendChild(statut);
+        fragment.appendChild(carte);
+      });
+
+      liste.appendChild(fragment);
+
+    } catch (erreur) {
+      console.error("Erreur Predixa :", erreur);
+
+      status.textContent =
+        "Impossible de charger les matchs. Vérifie les autorisations " +
+        "de la fonction Supabase et réessaie.";
+
+    } finally {
+      chargementEnCours = false;
+    }
+  }
+
+  function demanderAbonnement(formule, prix) {
+    const message =
+      `Formule : ${formule}\n` +
+      `Prix : ${prix} F CFA\n\n` +
+      "Le paiement doit être confirmé avant l'activation.";
+
+    alert(message);
+  }
+
+  function verifierCode() {
+    const champ = document.getElementById("premiumCode");
+    const message = document.getElementById("codeMessage");
+
+    if (!champ.value.trim()) {
+      message.textContent = "Entre ton code Premium.";
       return;
     }
 
-    liste.innerHTML = "";
-
-    data.forEach(match => {
-      const carte = document.createElement("div");
-      carte.className = "correspondre";
-
-      carte.style.margin = "10px 0";
-      carte.style.padding = "12px";
-
-      const titre = document.createElement("h3");
-      titre.textContent =
-        (match.home_team || match.equipe_domicile || match.homeTeam || "Équipe 1") +
-        " - " +
-        (match.away_team || match.equipe_exterieure || match.awayTeam || "Équipe 2");
-
-      carte.appendChild(titre);
-
-      if (match.date) {
-        const date = document.createElement("p");
-        date.textContent = "Date : " + match.date;
-        carte.appendChild(date);
-      }
-
-      if (match.status) {
-        const statut = document.createElement("p");
-        statut.textContent = "Statut : " + match.status;
-        carte.appendChild(statut);
-      }
-
-      liste.appendChild(carte);
-    });
-  } catch (erreur) {
-    console.error("Erreur de chargement des matchs :", erreur);
-
-    liste.innerHTML =
-      "<p>Impossible de charger les matchs. Vérifiez la connexion à Supabase et les autorisations de lecture.</p>";
+    message.textContent =
+      "La vérification des codes nécessite un système sécurisé " +
+      "connecté au serveur. Aucun accès Premium n'a été activé.";
   }
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-  const boutonMatch = document.querySelector(
-    'button[onclick*="afficherPage(\'matchs\')"]'
-  );
-
-  if (boutonMatch) {
-    boutonMatch.addEventListener("click", chargerMatchs);
-  }
-});
 </script>
+
 </body>
-     </html>
+  </html>
