@@ -251,6 +251,12 @@
       </button>
 
       <p id="matchStatus" class="muted" aria-live="polite"></p>
+      <div class="match-filters">
+  <button class="primary" onclick="filtrerMatchs('live')">🔴 En direct</button>
+  <button class="primary" onclick="filtrerMatchs('today')">📅 Aujourd'hui</button>
+  <button class="primary" onclick="filtrerMatchs('upcoming')">⏳ À venir</button>
+  <button class="primary" onclick="filtrerMatchs('all')">⚽ Tous</button>
+      </div>
     </div>
 
     <div id="liste"></div>
@@ -447,7 +453,8 @@
         );
 
         carte.appendChild(equipes);
-
+carte.dataset.dateMatch = match.fixture?.date || "";
+carte.dataset.statutMatch = match.fixture?.status?.short || "";
         const date = document.createElement("p");
         date.className = "muted";
 
@@ -485,9 +492,35 @@
 
     } finally {
       chargementEnCours = false;
-    }
-  }
+  function filtrerMatchs(categorie) {
+  const cartes = document.querySelectorAll("#liste article");
+  const maintenant = new Date();
 
+  cartes.forEach(carte => {
+    const dateTexte = carte.dataset.dateMatch;
+    const dateMatch = dateTexte ? new Date(dateTexte) : null;
+    const statut = (carte.dataset.statutMatch || "").toUpperCase();
+
+    const enDirect = ["1H", "2H", "HT", "ET", "P", "LIVE"].includes(statut);
+
+    const termine = ["FT", "AET", "PEN", "CANC", "PST", "ABD", "AWD", "WO"].includes(statut);
+
+    const aujourdHui = dateMatch &&
+      dateMatch.toLocaleDateString("fr-FR", { timeZone: "Africa/Abidjan" }) ===
+      maintenant.toLocaleDateString("fr-FR", { timeZone: "Africa/Abidjan" });
+
+    const aVenir = dateMatch && dateMatch > maintenant && !termine;
+
+    let afficher = true;
+
+    if (categorie === "live") afficher = enDirect;
+    if (categorie === "today") afficher = aujourdHui && !termine;
+    if (categorie === "upcoming") afficher = aVenir;
+    if (categorie === "all") afficher = true;
+
+    carte.style.display = afficher ? "" : "none";
+  });
+  }
   function demanderAbonnement(formule, prix) {
     const message =
       `Formule : ${formule}\n` +
