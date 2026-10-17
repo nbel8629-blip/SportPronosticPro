@@ -397,7 +397,8 @@
       matchs.forEach(match => {
         const carte = document.createElement("article");
         carte.className = "match";
-
+        carte.dataset.dateMatch = match.fixture?.date || "";
+        carte.dataset.statutMatch = match.fixture?.status?.short || "";
         const championnat = document.createElement("p");
         championnat.className = "league";
         championnat.textContent =
